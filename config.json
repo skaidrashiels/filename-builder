@@ -443,6 +443,10 @@
       {
         "value": "printready",
         "label": "printready"
+      },
+      {
+        "value": "asset",
+        "label": "asset"
       }
     ]
   },
