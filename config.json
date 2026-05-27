@@ -414,6 +414,10 @@
       {
         "value": "tabloid",
         "label": "tabloid"
+      },
+      {
+        "value": "letter",
+        "label": "letter"
       }
     ]
   },
