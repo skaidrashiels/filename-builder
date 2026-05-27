@@ -1,1 +1,486 @@
-{}
+{
+  "brand": {
+    "flat": true,
+    "options": [
+      {
+        "value": "",
+        "label": "— select —"
+      },
+      {
+        "value": "walden",
+        "label": "walden"
+      },
+      {
+        "value": "waldentrailblazers",
+        "label": "waldentrailblazers"
+      },
+      {
+        "value": "waldenreserve",
+        "label": "waldenreserve"
+      },
+      {
+        "value": "waldenreservecarbonoffset",
+        "label": "waldenreservecarbonoffset"
+      },
+      {
+        "value": "waldensnowcaps",
+        "label": "waldensnowcaps"
+      },
+      {
+        "value": "bonbon",
+        "label": "bonbon"
+      },
+      {
+        "value": "batonsdebonbon",
+        "label": "batonsdebonbon"
+      },
+      {
+        "value": "plume",
+        "label": "plume"
+      },
+      {
+        "value": "plumeblunts",
+        "label": "plumeblunts"
+      },
+      {
+        "value": "cascadecrest",
+        "label": "cascadecrest"
+      },
+      {
+        "value": "cascadecrestvapes",
+        "label": "cascadecrestvapes"
+      },
+      {
+        "value": "cascadecrestcrush",
+        "label": "cascadecrestcrush"
+      },
+      {
+        "value": "cascadecrestmellows",
+        "label": "cascadecrestmellows"
+      },
+      {
+        "value": "puffy",
+        "label": "puffy"
+      },
+      {
+        "value": "puffysodashoppe",
+        "label": "puffysodashoppe"
+      },
+      {
+        "value": "shotskis",
+        "label": "shotskis"
+      },
+      {
+        "value": "thedrink",
+        "label": "thedrink"
+      },
+      {
+        "value": "retired",
+        "label": "retired brand (type below)"
+      }
+    ]
+  },
+  "line": {
+    "flat": true,
+    "options": [
+      {
+        "value": "na",
+        "label": "na (none)"
+      },
+      {
+        "value": "wild",
+        "label": "wild"
+      },
+      {
+        "value": "bold",
+        "label": "bold"
+      },
+      {
+        "value": "free",
+        "label": "free"
+      },
+      {
+        "value": "calm",
+        "label": "calm"
+      },
+      {
+        "value": "cozy",
+        "label": "cozy"
+      },
+      {
+        "value": "well",
+        "label": "well"
+      },
+      {
+        "value": "justbe",
+        "label": "justbe"
+      },
+      {
+        "value": "sativa",
+        "label": "sativa"
+      },
+      {
+        "value": "indica",
+        "label": "indica"
+      },
+      {
+        "value": "hybrid",
+        "label": "hybrid"
+      },
+      {
+        "value": "hashrosin",
+        "label": "hashrosin"
+      },
+      {
+        "value": "liveresin",
+        "label": "liveresin"
+      },
+      {
+        "value": "curedresin",
+        "label": "curedresin"
+      }
+    ]
+  },
+  "category": {
+    "flat": true,
+    "options": [
+      {
+        "value": "",
+        "label": "— select —"
+      },
+      {
+        "value": "packaging",
+        "label": "packaging"
+      },
+      {
+        "value": "marketing",
+        "label": "marketing"
+      },
+      {
+        "value": "photo",
+        "label": "photo"
+      },
+      {
+        "value": "asset",
+        "label": "asset"
+      },
+      {
+        "value": "dev",
+        "label": "dev"
+      },
+      {
+        "value": "admin",
+        "label": "admin"
+      }
+    ]
+  },
+  "component": {
+    "flat": false,
+    "groups": [
+      {
+        "label": "packaging",
+        "options": [
+          {
+            "value": "frontlabel",
+            "label": "frontlabel"
+          },
+          {
+            "value": "backlabel",
+            "label": "backlabel"
+          },
+          {
+            "value": "barcode",
+            "label": "barcode"
+          },
+          {
+            "value": "dieline",
+            "label": "dieline"
+          },
+          {
+            "value": "boxpanel",
+            "label": "boxpanel"
+          },
+          {
+            "value": "boxfull",
+            "label": "boxfull"
+          },
+          {
+            "value": "hangtag",
+            "label": "hangtag"
+          },
+          {
+            "value": "headercard",
+            "label": "headercard"
+          },
+          {
+            "value": "stickersheet",
+            "label": "stickersheet"
+          },
+          {
+            "value": "insert",
+            "label": "insert"
+          },
+          {
+            "value": "sleeve",
+            "label": "sleeve"
+          },
+          {
+            "value": "pouch",
+            "label": "pouch"
+          }
+        ]
+      },
+      {
+        "label": "marketing",
+        "options": [
+          {
+            "value": "social",
+            "label": "social"
+          },
+          {
+            "value": "printad",
+            "label": "printad"
+          },
+          {
+            "value": "sellsheet",
+            "label": "sellsheet"
+          },
+          {
+            "value": "banner",
+            "label": "banner"
+          },
+          {
+            "value": "signage",
+            "label": "signage"
+          },
+          {
+            "value": "poster",
+            "label": "poster"
+          },
+          {
+            "value": "email",
+            "label": "email"
+          },
+          {
+            "value": "menu",
+            "label": "menu"
+          }
+        ]
+      },
+      {
+        "label": "photo",
+        "options": [
+          {
+            "value": "product",
+            "label": "product"
+          },
+          {
+            "value": "lifestyle",
+            "label": "lifestyle"
+          },
+          {
+            "value": "detail",
+            "label": "detail"
+          },
+          {
+            "value": "raw",
+            "label": "raw"
+          },
+          {
+            "value": "edit",
+            "label": "edit"
+          }
+        ]
+      },
+      {
+        "label": "asset",
+        "options": [
+          {
+            "value": "background",
+            "label": "background"
+          },
+          {
+            "value": "texture",
+            "label": "texture"
+          },
+          {
+            "value": "icon",
+            "label": "icon"
+          },
+          {
+            "value": "illustration",
+            "label": "illustration"
+          }
+        ]
+      },
+      {
+        "label": "dev / admin",
+        "options": [
+          {
+            "value": "spec",
+            "label": "spec"
+          },
+          {
+            "value": "techpack",
+            "label": "techpack"
+          },
+          {
+            "value": "cert",
+            "label": "cert"
+          },
+          {
+            "value": "compliance",
+            "label": "compliance"
+          },
+          {
+            "value": "swatch",
+            "label": "swatch"
+          }
+        ]
+      }
+    ]
+  },
+  "size": {
+    "flat": true,
+    "options": [
+      {
+        "value": "na",
+        "label": "na (none)"
+      },
+      {
+        "value": "0p5g",
+        "label": "0.5g"
+      },
+      {
+        "value": "1g",
+        "label": "1g"
+      },
+      {
+        "value": "3p5g",
+        "label": "3.5g"
+      },
+      {
+        "value": "7g",
+        "label": "7g"
+      },
+      {
+        "value": "14g",
+        "label": "14g"
+      },
+      {
+        "value": "28g",
+        "label": "28g"
+      },
+      {
+        "value": "5pk",
+        "label": "5pk"
+      },
+      {
+        "value": "6pk",
+        "label": "6pk"
+      },
+      {
+        "value": "10pk",
+        "label": "10pk"
+      },
+      {
+        "value": "14pk",
+        "label": "14pk"
+      },
+      {
+        "value": "lgroll",
+        "label": "lgroll"
+      },
+      {
+        "value": "smroll",
+        "label": "smroll"
+      },
+      {
+        "value": "thermroll",
+        "label": "thermroll"
+      },
+      {
+        "value": "large",
+        "label": "large"
+      },
+      {
+        "value": "small",
+        "label": "small"
+      },
+      {
+        "value": "other",
+        "label": "other (type below)"
+      }
+    ]
+  },
+  "status": {
+    "flat": true,
+    "options": [
+      {
+        "value": "na",
+        "label": "na (none)"
+      },
+      {
+        "value": "wip",
+        "label": "wip"
+      },
+      {
+        "value": "review",
+        "label": "review"
+      },
+      {
+        "value": "final",
+        "label": "final"
+      },
+      {
+        "value": "printready",
+        "label": "printready"
+      }
+    ]
+  },
+  "version": {
+    "flat": true,
+    "options": [
+      {
+        "value": "v01",
+        "label": "v01"
+      },
+      {
+        "value": "v02",
+        "label": "v02"
+      },
+      {
+        "value": "v03",
+        "label": "v03"
+      },
+      {
+        "value": "v04",
+        "label": "v04"
+      },
+      {
+        "value": "v05",
+        "label": "v05"
+      },
+      {
+        "value": "v06",
+        "label": "v06"
+      },
+      {
+        "value": "v07",
+        "label": "v07"
+      },
+      {
+        "value": "v08",
+        "label": "v08"
+      },
+      {
+        "value": "v09",
+        "label": "v09"
+      },
+      {
+        "value": "v10",
+        "label": "v10"
+      }
+    ]
+  }
+}
