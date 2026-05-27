@@ -418,6 +418,10 @@
       {
         "value": "letter",
         "label": "letter"
+      },
+      {
+        "value": "square",
+        "label": "square"
       }
     ]
   },
