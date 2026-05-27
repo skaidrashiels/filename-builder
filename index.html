@@ -766,6 +766,12 @@ document.getElementById('date').value = `${today.getFullYear()}-${pad(today.getM
 (async () => {
   setSyncStatus('saving', 'loading config…');
   await loadConfigFromGitHub();
+  // If config is empty or missing keys, seed from defaults and save
+  const hasKeys = config && Object.keys(config).length > 0 && config.brand;
+  if (!hasKeys) {
+    config = JSON.parse(JSON.stringify(DEFAULTS));
+    if (token) await saveConfigToGitHub();
+  }
   loadSelections();
   renderAll();
   setSyncStatus('', '');
