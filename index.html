@@ -158,7 +158,7 @@
   }
   .add-btn:hover { background: #f0efe9; }
 
-  /* Plain text input for Subject/other */
+  /* Plain text input for strain/other */
   .plain-input {
     width: 100%;
     padding: 8px 10px;
@@ -248,8 +248,8 @@
   </div>
 
   <div class="field-group">
-    <label class="field-label">Subject </label>
-    <input type="text" class="plain-input" id="Subject" placeholder="fruitloops, orig, etc." />
+    <label class="field-label">Strain / Flavor</label>
+    <input type="text" class="plain-input" id="strain" placeholder="fruitloops, orig, etc." />
   </div>
 
   <hr />
@@ -450,8 +450,20 @@ let state = {};
 function loadState() {
   try {
     const saved = localStorage.getItem(LS_KEY);
-    if (saved) state = JSON.parse(saved);
-    else resetToDefaults(false);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Merge: start from defaults, overlay saved state field by field
+      state = {};
+      Object.keys(DEFAULTS).forEach(k => {
+        if (parsed[k]) {
+          state[k] = parsed[k];
+        } else {
+          state[k] = { selected: getDefaultSelected(k), data: JSON.parse(JSON.stringify(DEFAULTS[k])) };
+        }
+      });
+    } else {
+      resetToDefaults(false);
+    }
   } catch(e) { resetToDefaults(false); }
 }
 
@@ -490,8 +502,8 @@ function buildFilename() {
     ? clean(document.getElementById('brand-other').value)
     : clean(state.brand.selected);
   const line = clean(state.line.selected) || 'na';
-  const SubjectRaw = document.getElementById('Subject').value.trim();
-  const Subject = SubjectRaw ? clean(SubjectRaw) : 'orig';
+  const strainRaw = document.getElementById('strain').value.trim();
+  const strain = strainRaw ? clean(strainRaw) : 'orig';
   const category = clean(state.category.selected);
   const component = clean(state.component.selected);
   const size = state.size.selected === 'other'
@@ -501,7 +513,7 @@ function buildFilename() {
   const version = state.version.selected;
   const dateRaw = document.getElementById('date').value;
   const date = dateRaw ? dateRaw.replace(/-/g,'') : '';
-  const parts = [brand, line, Subject, component || category, size, status, version, date];
+  const parts = [brand, line, strain, component || category, size, status, version, date];
   document.getElementById('output').textContent = parts.filter(Boolean).join('_') || '—';
 }
 
@@ -703,7 +715,7 @@ document.addEventListener('click', () => {
   document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));
 });
 
-document.getElementById('Subject').addEventListener('input', buildFilename);
+document.getElementById('strain').addEventListener('input', buildFilename);
 document.getElementById('brand-other').addEventListener('input', buildFilename);
 document.getElementById('size-other').addEventListener('input', buildFilename);
 document.getElementById('date').addEventListener('change', buildFilename);
