@@ -158,7 +158,7 @@
   }
   .add-btn:hover { background: #f0efe9; }
 
-  /* Plain text input for strain/other */
+  /* Plain text input for subject/other */
   .plain-input {
     width: 100%;
     padding: 8px 10px;
@@ -248,8 +248,8 @@
   </div>
 
   <div class="field-group">
-    <label class="field-label">Strain / Flavor</label>
-    <input type="text" class="plain-input" id="strain" placeholder="fruitloops, orig, etc." />
+    <label class="field-label">subject / Flavor</label>
+    <input type="text" class="plain-input" id="subject" placeholder="fruitloops, orig, etc." />
   </div>
 
   <hr />
@@ -490,8 +490,8 @@ function buildFilename() {
     ? clean(document.getElementById('brand-other').value)
     : clean(state.brand.selected);
   const line = clean(state.line.selected) || 'na';
-  const strainRaw = document.getElementById('strain').value.trim();
-  const strain = strainRaw ? clean(strainRaw) : 'orig';
+  const subjectRaw = document.getElementById('subject').value.trim();
+  const subject = subjectRaw ? clean(subjectRaw) : 'orig';
   const category = clean(state.category.selected);
   const component = clean(state.component.selected);
   const size = state.size.selected === 'other'
@@ -501,7 +501,7 @@ function buildFilename() {
   const version = state.version.selected;
   const dateRaw = document.getElementById('date').value;
   const date = dateRaw ? dateRaw.replace(/-/g,'') : '';
-  const parts = [brand, line, strain, component || category, size, status, version, date];
+  const parts = [brand, line, subject, component || category, size, status, version, date];
   document.getElementById('output').textContent = parts.filter(Boolean).join('_') || '—';
 }
 
@@ -703,7 +703,7 @@ document.addEventListener('click', () => {
   document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));
 });
 
-document.getElementById('strain').addEventListener('input', buildFilename);
+document.getElementById('subject').addEventListener('input', buildFilename);
 document.getElementById('brand-other').addEventListener('input', buildFilename);
 document.getElementById('size-other').addEventListener('input', buildFilename);
 document.getElementById('date').addEventListener('change', buildFilename);
