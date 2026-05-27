@@ -6,7 +6,6 @@
 <title>Filename Builder</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 12px;
@@ -15,7 +14,6 @@
     min-height: 100vh;
     padding: 50px;
   }
-
   .page {
     max-width: 600px;
     margin: 0 auto;
@@ -24,215 +22,145 @@
     border-radius: 12px;
     padding: 50px;
   }
-
-  h1 {
-    font-size: 30px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    letter-spacing: -0.5px;
-  }
-
-  .subhead {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 28px 0 16px;
-    letter-spacing: -0.3px;
-  }
-
-  hr {
-    border: none;
-    border-top: 0.5px solid #e0ded8;
-    margin: 28px 0;
-  }
-
+  h1 { font-size: 30px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.5px; }
+  .subhead { font-size: 20px; font-weight: 700; margin: 28px 0 16px; letter-spacing: -0.3px; }
+  hr { border: none; border-top: 0.5px solid #e0ded8; margin: 28px 0; }
   .field-group { margin-bottom: 18px; }
+  .field-label { font-size: 12px; color: #666; font-weight: 500; margin-bottom: 6px; display: block; }
 
-  .field-label {
-    font-size: 12px;
-    color: #666;
-    font-weight: 500;
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  /* Custom select */
   .custom-select-wrap { position: relative; }
-
   .custom-select-trigger {
-    width: 100%;
-    padding: 8px 32px 8px 10px;
-    font-size: 12px;
-    border: 0.5px solid #c8c6c0;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
-    font-family: inherit;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%; padding: 8px 32px 8px 10px; font-size: 12px;
+    border: 0.5px solid #c8c6c0; border-radius: 8px;
+    background: #fff; color: #1a1a1a; font-family: inherit;
+    cursor: pointer; text-align: left; display: flex;
+    align-items: center; justify-content: space-between;
   }
   .custom-select-trigger:hover { border-color: #999; }
   .custom-select-trigger .arrow { font-size: 10px; color: #999; flex-shrink: 0; }
-
   .custom-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0; right: 0;
-    background: #fff;
-    border: 0.5px solid #c8c6c0;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    z-index: 100;
-    max-height: 280px;
-    overflow-y: auto;
+    display: none; position: absolute; top: calc(100% + 4px);
+    left: 0; right: 0; background: #fff;
+    border: 0.5px solid #c8c6c0; border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1); z-index: 100;
+    max-height: 280px; overflow-y: auto;
   }
   .custom-dropdown.open { display: block; }
-
   .dropdown-group-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 8px 10px 4px;
+    font-size: 10px; font-weight: 600; color: #999;
+    text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 10px 4px;
   }
-
   .dropdown-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7px 10px;
-    cursor: pointer;
-    font-size: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 10px; cursor: pointer; font-size: 12px;
   }
   .dropdown-option:hover { background: #f5f4f0; }
   .dropdown-option.selected { font-weight: 500; }
   .dropdown-option .opt-label { flex: 1; }
-
   .opt-actions { display: none; gap: 4px; }
   .dropdown-option:hover .opt-actions { display: flex; }
-
   .opt-btn {
-    padding: 2px 6px;
-    font-size: 10px;
-    border: 0.5px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
-    color: #555;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
+    padding: 2px 6px; font-size: 10px; border: 0.5px solid #ccc;
+    border-radius: 4px; background: #fff; color: #555;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
   }
   .opt-btn:hover { background: #eee; }
   .opt-btn.danger:hover { background: #fee; color: #c00; border-color: #f99; }
-
   .dropdown-add {
-    padding: 6px 10px;
-    border-top: 0.5px solid #e8e6e0;
-    display: flex;
-    gap: 6px;
-    align-items: center;
+    padding: 6px 10px; border-top: 0.5px solid #e8e6e0;
+    display: flex; gap: 6px; align-items: center;
   }
   .dropdown-add input {
-    flex: 1;
-    padding: 5px 8px;
-    font-size: 11px;
-    border: 0.5px solid #ccc;
-    border-radius: 6px;
-    font-family: inherit;
-    background: #faf9f7;
+    flex: 1; padding: 5px 8px; font-size: 11px;
+    border: 0.5px solid #ccc; border-radius: 6px;
+    font-family: inherit; background: #faf9f7;
   }
   .dropdown-add input:focus { outline: none; border-color: #888; }
   .add-btn {
-    padding: 5px 10px;
-    font-size: 11px;
-    border: 0.5px solid #ccc;
-    border-radius: 6px;
-    background: #fff;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
+    padding: 5px 10px; font-size: 11px; border: 0.5px solid #ccc;
+    border-radius: 6px; background: #fff; cursor: pointer;
+    font-family: inherit; white-space: nowrap;
   }
   .add-btn:hover { background: #f0efe9; }
-
-  /* Plain text input for strain/other */
   .plain-input {
-    width: 100%;
-    padding: 8px 10px;
-    font-size: 12px;
-    border: 0.5px solid #c8c6c0;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
-    font-family: inherit;
+    width: 100%; padding: 8px 10px; font-size: 12px;
+    border: 0.5px solid #c8c6c0; border-radius: 8px;
+    background: #fff; color: #1a1a1a; font-family: inherit;
   }
   .plain-input:focus { outline: none; border-color: #888; }
   .plain-input.hidden { display: none; margin-top: 6px; }
-
-  /* Output */
   .output-box {
-    background: #f5f4f0;
-    border: 0.5px solid #d8d6d0;
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-top: 28px;
+    background: #f5f4f0; border: 0.5px solid #d8d6d0;
+    border-radius: 10px; padding: 20px 24px; margin-top: 28px;
   }
-  .output-label {
-    font-size: 10px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
-  }
+  .output-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
   .filename {
     font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 13px;
-    color: #1a1a1a;
-    word-break: break-all;
-    line-height: 1.6;
-    min-height: 20px;
+    font-size: 13px; color: #1a1a1a; word-break: break-all;
+    line-height: 1.6; min-height: 20px;
   }
   .copy-btn {
-    margin-top: 12px;
-    padding: 7px 16px;
-    font-size: 12px;
-    border: 0.5px solid #c8c6c0;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
-    cursor: pointer;
-    font-family: inherit;
+    margin-top: 12px; padding: 7px 16px; font-size: 12px;
+    border: 0.5px solid #c8c6c0; border-radius: 8px;
+    background: #fff; color: #1a1a1a; cursor: pointer; font-family: inherit;
   }
   .copy-btn:hover { background: #f0efe9; }
-
+  .rename-input {
+    flex: 1; padding: 2px 6px; font-size: 12px;
+    border: 0.5px solid #888; border-radius: 4px; font-family: inherit;
+  }
+  .rename-input:focus { outline: none; }
   .reset-link {
-    font-size: 11px;
-    color: #aaa;
-    text-decoration: underline;
-    cursor: pointer;
-    margin-top: 28px;
-    display: inline-block;
+    font-size: 11px; color: #aaa; text-decoration: underline;
+    cursor: pointer; margin-top: 28px; display: inline-block;
   }
   .reset-link:hover { color: #c00; }
 
-  /* Inline rename input */
-  .rename-input {
-    flex: 1;
-    padding: 2px 6px;
-    font-size: 12px;
-    border: 0.5px solid #888;
-    border-radius: 4px;
-    font-family: inherit;
+  /* Token UI */
+  .token-bar {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 24px; padding: 10px 14px;
+    background: #faf9f7; border: 0.5px solid #e0ded8;
+    border-radius: 8px;
   }
-  .rename-input:focus { outline: none; }
+  .token-bar label { font-size: 11px; color: #888; white-space: nowrap; }
+  .token-bar input {
+    flex: 1; padding: 5px 8px; font-size: 11px;
+    border: 0.5px solid #ccc; border-radius: 6px;
+    font-family: inherit; background: #fff;
+  }
+  .token-bar input:focus { outline: none; border-color: #888; }
+  .token-save-btn {
+    padding: 5px 12px; font-size: 11px; border: 0.5px solid #ccc;
+    border-radius: 6px; background: #fff; cursor: pointer; font-family: inherit;
+  }
+  .token-save-btn:hover { background: #f0efe9; }
+  .token-status { font-size: 11px; color: #888; white-space: nowrap; }
+  .token-status.ok { color: #4a9; }
+  .token-status.err { color: #c44; }
+
+  .sync-status {
+    font-size: 10px; color: #aaa; margin-top: 6px; min-height: 14px;
+    text-align: right;
+  }
+  .sync-status.saving { color: #888; }
+  .sync-status.saved { color: #4a9; }
+  .sync-status.err { color: #c44; }
+  .no-edit-notice {
+    font-size: 11px; color: #bbb; font-style: italic; margin-top: 4px;
+  }
 </style>
 </head>
 <body>
 <div class="page">
   <h1>Filename Builder</h1>
+
+  <div class="token-bar">
+    <label>&#128274; Admin token</label>
+    <input type="password" id="token-input" placeholder="paste your GitHub token to enable editing" />
+    <button class="token-save-btn" id="token-save-btn">Save</button>
+    <span class="token-status" id="token-status"></span>
+  </div>
 
   <div class="subhead">Brand &amp; Product</div>
 
@@ -248,8 +176,8 @@
   </div>
 
   <div class="field-group">
-    <label class="field-label">Strain / Flavor</label>
-    <input type="text" class="plain-input" id="strain" placeholder="fruitloops, orig, etc." />
+    <label class="field-label">Subject</label>
+    <input type="text" class="plain-input" id="strain" placeholder="fruitloops, juneteenth, orig, etc." />
   </div>
 
   <hr />
@@ -295,10 +223,17 @@
     <button class="copy-btn" id="copy-btn">&#x2398; Copy</button>
   </div>
 
-  <div class="reset-link" id="reset-btn">Reset all customizations to defaults</div>
+  <div class="sync-status" id="sync-status"></div>
+  <div class="reset-link" id="reset-btn">Reset all dropdowns to defaults</div>
 </div>
 
 <script>
+const GITHUB_USER = 'skaidrashiels';
+const GITHUB_REPO = 'filename-builder';
+const CONFIG_PATH = 'config.json';
+const TOKEN_KEY = 'fb_gh_token';
+const SELECTIONS_KEY = 'fb_selections';
+
 const DEFAULTS = {
   brand: {
     flat: true,
@@ -350,6 +285,7 @@ const DEFAULTS = {
       { value: 'packaging', label: 'packaging' },
       { value: 'marketing', label: 'marketing' },
       { value: 'photo', label: 'photo' },
+      { value: 'asset', label: 'asset' },
       { value: 'dev', label: 'dev' },
       { value: 'admin', label: 'admin' }
     ]
@@ -377,6 +313,7 @@ const DEFAULTS = {
         { value: 'sellsheet', label: 'sellsheet' },
         { value: 'banner', label: 'banner' },
         { value: 'signage', label: 'signage' },
+        { value: 'poster', label: 'poster' },
         { value: 'email', label: 'email' },
         { value: 'menu', label: 'menu' }
       ]},
@@ -386,6 +323,12 @@ const DEFAULTS = {
         { value: 'detail', label: 'detail' },
         { value: 'raw', label: 'raw' },
         { value: 'edit', label: 'edit' }
+      ]},
+      { label: 'asset', options: [
+        { value: 'background', label: 'background' },
+        { value: 'texture', label: 'texture' },
+        { value: 'icon', label: 'icon' },
+        { value: 'illustration', label: 'illustration' }
       ]},
       { label: 'dev / admin', options: [
         { value: 'spec', label: 'spec' },
@@ -421,6 +364,7 @@ const DEFAULTS = {
   status: {
     flat: true,
     options: [
+      { value: 'na', label: 'na (none)' },
       { value: 'wip', label: 'wip' },
       { value: 'review', label: 'review' },
       { value: 'final', label: 'final' },
@@ -430,65 +374,128 @@ const DEFAULTS = {
   version: {
     flat: true,
     options: [
-      { value: 'v01', label: 'v01' },
-      { value: 'v02', label: 'v02' },
-      { value: 'v03', label: 'v03' },
-      { value: 'v04', label: 'v04' },
-      { value: 'v05', label: 'v05' },
-      { value: 'v06', label: 'v06' },
-      { value: 'v07', label: 'v07' },
-      { value: 'v08', label: 'v08' },
-      { value: 'v09', label: 'v09' },
-      { value: 'v10', label: 'v10' }
+      { value: 'v01', label: 'v01' },{ value: 'v02', label: 'v02' },
+      { value: 'v03', label: 'v03' },{ value: 'v04', label: 'v04' },
+      { value: 'v05', label: 'v05' },{ value: 'v06', label: 'v06' },
+      { value: 'v07', label: 'v07' },{ value: 'v08', label: 'v08' },
+      { value: 'v09', label: 'v09' },{ value: 'v10', label: 'v10' }
     ]
   }
 };
 
-const LS_KEY = 'filename_builder_data';
-let state = {};
+let config = null; // loaded from GitHub
+let configSha = null; // needed to write back to GitHub
+let state = {}; // selected values only, saved to localStorage
+let token = localStorage.getItem(TOKEN_KEY) || '';
+let canEdit = false;
+let saveTimer = null;
 
-function loadState() {
-  try {
-    const saved = localStorage.getItem(LS_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Merge: start from defaults, overlay saved state field by field
-      state = {};
-      Object.keys(DEFAULTS).forEach(k => {
-        if (parsed[k]) {
-          state[k] = parsed[k];
-        } else {
-          state[k] = { selected: getDefaultSelected(k), data: JSON.parse(JSON.stringify(DEFAULTS[k])) };
-        }
-      });
-    } else {
-      resetToDefaults(false);
-    }
-  } catch(e) { resetToDefaults(false); }
-}
+// --- Token UI ---
+const tokenInput = document.getElementById('token-input');
+const tokenStatus = document.getElementById('token-status');
+if (token) { tokenInput.value = token; tokenStatus.textContent = 'token saved'; tokenStatus.className = 'token-status ok'; canEdit = true; }
 
-function saveState() {
-  localStorage.setItem(LS_KEY, JSON.stringify(state));
-}
-
-function resetToDefaults(confirm_first) {
-  if (confirm_first && !window.confirm('Reset all dropdowns to defaults? This cannot be undone.')) return;
-  state = {};
-  Object.keys(DEFAULTS).forEach(k => {
-    state[k] = { selected: getDefaultSelected(k), data: JSON.parse(JSON.stringify(DEFAULTS[k])) };
-  });
-  saveState();
+document.getElementById('token-save-btn').addEventListener('click', () => {
+  const val = tokenInput.value.trim();
+  if (!val) { localStorage.removeItem(TOKEN_KEY); token = ''; canEdit = false; tokenStatus.textContent = 'cleared'; tokenStatus.className = 'token-status'; return; }
+  localStorage.setItem(TOKEN_KEY, val);
+  token = val; canEdit = true;
+  tokenStatus.textContent = 'token saved';
+  tokenStatus.className = 'token-status ok';
   renderAll();
+});
+
+// --- GitHub API ---
+async function loadConfigFromGitHub() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${CONFIG_PATH}`, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (res.status === 404) {
+      // config.json doesn't exist yet, use defaults
+      config = JSON.parse(JSON.stringify(DEFAULTS));
+      configSha = null;
+      return;
+    }
+    const data = await res.json();
+    configSha = data.sha;
+    config = JSON.parse(atob(data.content.replace(/\n/g, '')));
+  } catch(e) {
+    config = JSON.parse(JSON.stringify(DEFAULTS));
+    configSha = null;
+  }
 }
 
-function getDefaultSelected(k) {
-  const d = DEFAULTS[k];
-  if (d.flat) return d.options[0].value;
+async function saveConfigToGitHub() {
+  if (!token) return;
+  setSyncStatus('saving', 'saving…');
+  try {
+    const body = {
+      message: 'Update filename builder config',
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(config, null, 2)))),
+    };
+    if (configSha) body.sha = configSha;
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${CONFIG_PATH}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github+json'
+      },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      configSha = data.content.sha;
+      setSyncStatus('saved', 'saved to GitHub ✓');
+      setTimeout(() => setSyncStatus('', ''), 3000);
+    } else {
+      setSyncStatus('err', 'save failed: ' + (data.message || res.status));
+    }
+  } catch(e) {
+    setSyncStatus('err', 'save failed: ' + e.message);
+  }
+}
+
+function setSyncStatus(cls, msg) {
+  const el = document.getElementById('sync-status');
+  el.className = 'sync-status' + (cls ? ' ' + cls : '');
+  el.textContent = msg;
+}
+
+function scheduleSave() {
+  if (!canEdit) return;
+  if (saveTimer) clearTimeout(saveTimer);
+  setSyncStatus('saving', 'pending save…');
+  saveTimer = setTimeout(() => saveConfigToGitHub(), 1200);
+}
+
+// --- State (selections only) ---
+function loadSelections() {
+  try {
+    const saved = localStorage.getItem(SELECTIONS_KEY);
+    if (saved) state = JSON.parse(saved);
+    else {
+      Object.keys(DEFAULTS).forEach(k => { state[k] = getDefaultSelected(k, config[k]); });
+    }
+  } catch(e) {
+    Object.keys(DEFAULTS).forEach(k => { state[k] = getDefaultSelected(k, config[k]); });
+  }
+}
+
+function saveSelections() {
+  localStorage.setItem(SELECTIONS_KEY, JSON.stringify(state));
+}
+
+function getDefaultSelected(k, cfg) {
+  if (!cfg) return '';
+  if (cfg.flat) return cfg.options[0]?.value || '';
   return '';
 }
 
 function getAllOptions(fieldKey) {
-  const d = state[fieldKey].data;
+  const d = config[fieldKey];
+  if (!d) return [];
   if (d.flat) return d.options;
   return d.groups.flatMap(g => g.options);
 }
@@ -498,19 +505,20 @@ function clean(str) {
 }
 
 function buildFilename() {
-  const brand = state.brand.selected === 'retired'
+  if (!config) return;
+  const brand = state.brand === 'retired'
     ? clean(document.getElementById('brand-other').value)
-    : clean(state.brand.selected);
-  const line = clean(state.line.selected) || 'na';
+    : clean(state.brand || '');
+  const line = clean(state.line || '') || 'na';
   const strainRaw = document.getElementById('strain').value.trim();
   const strain = strainRaw ? clean(strainRaw) : 'orig';
-  const category = clean(state.category.selected);
-  const component = clean(state.component.selected);
-  const size = state.size.selected === 'other'
+  const category = clean(state.category || '');
+  const component = clean(state.component || '');
+  const size = state.size === 'other'
     ? clean(document.getElementById('size-other').value)
-    : state.size.selected;
-  const status = clean(state.status.selected);
-  const version = state.version.selected;
+    : (state.size || '');
+  const status = clean(state.status || '');
+  const version = state.version || '';
   const dateRaw = document.getElementById('date').value;
   const date = dateRaw ? dateRaw.replace(/-/g,'') : '';
   const parts = [brand, line, strain, component || category, size, status, version, date];
@@ -519,11 +527,11 @@ function buildFilename() {
 
 function renderSelect(fieldKey) {
   const wrap = document.getElementById('wrap-' + fieldKey);
-  if (!wrap) return;
+  if (!wrap || !config[fieldKey]) return;
   wrap.innerHTML = '';
 
-  const d = state[fieldKey].data;
-  const selected = state[fieldKey].selected;
+  const d = config[fieldKey];
+  const selected = state[fieldKey] || '';
 
   const selectedLabel = (() => {
     const all = getAllOptions(fieldKey);
@@ -550,70 +558,72 @@ function renderSelect(fieldKey) {
       labelSpan.className = 'opt-label';
       labelSpan.textContent = opt.label;
 
-      const actions = document.createElement('div');
-      actions.className = 'opt-actions';
-
-      const renameBtn = document.createElement('button');
-      renameBtn.className = 'opt-btn';
-      renameBtn.textContent = 'rename';
-      renameBtn.onclick = (e) => {
-        e.stopPropagation();
-        labelSpan.style.display = 'none';
-        actions.style.display = 'none';
-        const inp = document.createElement('input');
-        inp.className = 'rename-input';
-        inp.value = opt.label;
-        inp.onclick = e => e.stopPropagation();
-        const saveBtn = document.createElement('button');
-        saveBtn.className = 'opt-btn';
-        saveBtn.textContent = 'save';
-        saveBtn.onclick = (e2) => {
-          e2.stopPropagation();
-          const newLabel = inp.value.trim();
-          if (!newLabel) return;
-          opt.label = newLabel;
-          if (opt.value === selected) trigger.querySelector('.opt-label').textContent = newLabel;
-          saveState();
-          renderOptions();
-        };
-        inp.onkeydown = (e2) => { if (e2.key === 'Enter') saveBtn.click(); };
-        row.appendChild(inp);
-        row.appendChild(saveBtn);
-        inp.focus(); inp.select();
-      };
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.className = 'opt-btn danger';
-      deleteBtn.textContent = 'delete';
-      deleteBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (!window.confirm(`Delete "${opt.label}"?`)) return;
-        if (d.flat) {
-          d.options = d.options.filter(o => o !== opt);
-        } else {
-          const grp = d.groups.find(g => g.label === groupLabel);
-          if (grp) grp.options = grp.options.filter(o => o !== opt);
-        }
-        if (state[fieldKey].selected === opt.value) {
-          state[fieldKey].selected = getAllOptions(fieldKey)[0]?.value || '';
-        }
-        saveState();
-        renderSelect(fieldKey);
-        buildFilename();
-      };
-
-      actions.appendChild(renameBtn);
-      actions.appendChild(deleteBtn);
-
       row.appendChild(labelSpan);
-      row.appendChild(actions);
+
+      if (canEdit) {
+        const actions = document.createElement('div');
+        actions.className = 'opt-actions';
+
+        const renameBtn = document.createElement('button');
+        renameBtn.className = 'opt-btn';
+        renameBtn.textContent = 'rename';
+        renameBtn.onclick = (e) => {
+          e.stopPropagation();
+          labelSpan.style.display = 'none';
+          actions.style.display = 'none';
+          const inp = document.createElement('input');
+          inp.className = 'rename-input';
+          inp.value = opt.label;
+          inp.onclick = e => e.stopPropagation();
+          const saveBtn = document.createElement('button');
+          saveBtn.className = 'opt-btn';
+          saveBtn.textContent = 'save';
+          saveBtn.onclick = (e2) => {
+            e2.stopPropagation();
+            const newLabel = inp.value.trim();
+            if (!newLabel) return;
+            opt.label = newLabel;
+            if (opt.value === selected) trigger.querySelector('.opt-label').textContent = newLabel;
+            scheduleSave();
+            renderOptions();
+          };
+          inp.onkeydown = (e2) => { if (e2.key === 'Enter') saveBtn.click(); };
+          row.appendChild(inp);
+          row.appendChild(saveBtn);
+          inp.focus(); inp.select();
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'opt-btn danger';
+        deleteBtn.textContent = 'delete';
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (!window.confirm(`Delete "${opt.label}"?`)) return;
+          if (d.flat) {
+            d.options = d.options.filter(o => o !== opt);
+          } else {
+            const grp = d.groups.find(g => g.label === groupLabel);
+            if (grp) grp.options = grp.options.filter(o => o !== opt);
+          }
+          if (state[fieldKey] === opt.value) {
+            state[fieldKey] = getAllOptions(fieldKey)[0]?.value || '';
+            saveSelections();
+          }
+          scheduleSave();
+          renderSelect(fieldKey);
+          buildFilename();
+        };
+
+        actions.appendChild(renameBtn);
+        actions.appendChild(deleteBtn);
+        row.appendChild(actions);
+      }
 
       row.addEventListener('click', () => {
-        state[fieldKey].selected = opt.value;
+        state[fieldKey] = opt.value;
         trigger.querySelector('.opt-label').textContent = opt.label;
-        saveState();
+        saveSelections();
         dropdown.classList.remove('open');
-
         if (fieldKey === 'brand') {
           document.getElementById('brand-other').classList.toggle('hidden', opt.value !== 'retired');
         }
@@ -638,59 +648,66 @@ function renderSelect(fieldKey) {
       });
     }
 
-    const addRow = document.createElement('div');
-    addRow.className = 'dropdown-add';
-    const addInput = document.createElement('input');
-    addInput.placeholder = 'add new option…';
-    addInput.onclick = e => e.stopPropagation();
+    if (canEdit) {
+      const addRow = document.createElement('div');
+      addRow.className = 'dropdown-add';
+      const addInput = document.createElement('input');
+      addInput.placeholder = 'add new option…';
+      addInput.onclick = e => e.stopPropagation();
 
-    if (!d.flat) {
-      const groupSelect = document.createElement('select');
-      groupSelect.style.cssText = 'padding:4px 6px;font-size:11px;border:0.5px solid #ccc;border-radius:6px;font-family:inherit;background:#faf9f7;';
-      groupSelect.onclick = e => e.stopPropagation();
-      d.groups.forEach(g => {
-        const o = document.createElement('option');
-        o.value = g.label; o.textContent = g.label;
-        groupSelect.appendChild(o);
-      });
-      addRow.appendChild(groupSelect);
-      addRow.appendChild(addInput);
-      const addBtn = document.createElement('button');
-      addBtn.className = 'add-btn';
-      addBtn.textContent = '+ add';
-      addBtn.onclick = (e) => {
-        e.stopPropagation();
-        const val = clean(addInput.value.trim());
-        const lbl = addInput.value.trim();
-        if (!val) return;
-        const grp = d.groups.find(g => g.label === groupSelect.value);
-        if (grp) grp.options.push({ value: val, label: lbl });
-        addInput.value = '';
-        saveState();
-        renderOptions();
-      };
-      addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
-      addRow.appendChild(addBtn);
+      if (!d.flat) {
+        const groupSelect = document.createElement('select');
+        groupSelect.style.cssText = 'padding:4px 6px;font-size:11px;border:0.5px solid #ccc;border-radius:6px;font-family:inherit;background:#faf9f7;';
+        groupSelect.onclick = e => e.stopPropagation();
+        d.groups.forEach(g => {
+          const o = document.createElement('option');
+          o.value = g.label; o.textContent = g.label;
+          groupSelect.appendChild(o);
+        });
+        addRow.appendChild(groupSelect);
+        addRow.appendChild(addInput);
+        const addBtn = document.createElement('button');
+        addBtn.className = 'add-btn';
+        addBtn.textContent = '+ add';
+        addBtn.onclick = (e) => {
+          e.stopPropagation();
+          const val = clean(addInput.value.trim());
+          const lbl = addInput.value.trim();
+          if (!val) return;
+          const grp = d.groups.find(g => g.label === groupSelect.value);
+          if (grp) grp.options.push({ value: val, label: lbl });
+          addInput.value = '';
+          scheduleSave();
+          renderOptions();
+        };
+        addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
+        addRow.appendChild(addBtn);
+      } else {
+        addRow.appendChild(addInput);
+        const addBtn = document.createElement('button');
+        addBtn.className = 'add-btn';
+        addBtn.textContent = '+ add';
+        addBtn.onclick = (e) => {
+          e.stopPropagation();
+          const val = clean(addInput.value.trim());
+          const lbl = addInput.value.trim();
+          if (!val) return;
+          d.options.push({ value: val, label: lbl });
+          addInput.value = '';
+          scheduleSave();
+          renderOptions();
+        };
+        addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
+        addRow.appendChild(addBtn);
+      }
+      dropdown.appendChild(addRow);
     } else {
-      addRow.appendChild(addInput);
-      const addBtn = document.createElement('button');
-      addBtn.className = 'add-btn';
-      addBtn.textContent = '+ add';
-      addBtn.onclick = (e) => {
-        e.stopPropagation();
-        const val = clean(addInput.value.trim());
-        const lbl = addInput.value.trim();
-        if (!val) return;
-        d.options.push({ value: val, label: lbl });
-        addInput.value = '';
-        saveState();
-        renderOptions();
-      };
-      addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
-      addRow.appendChild(addBtn);
+      const notice = document.createElement('div');
+      notice.className = 'no-edit-notice';
+      notice.style.padding = '8px 10px';
+      notice.textContent = 'Enter admin token to edit options';
+      dropdown.appendChild(notice);
     }
-
-    dropdown.appendChild(addRow);
   };
 
   renderOptions();
@@ -705,6 +722,7 @@ function renderSelect(fieldKey) {
 }
 
 function renderAll() {
+  if (!config) return;
   Object.keys(DEFAULTS).forEach(k => renderSelect(k));
   document.getElementById('brand-other').classList.add('hidden');
   document.getElementById('size-other').classList.add('hidden');
@@ -730,14 +748,28 @@ document.getElementById('copy-btn').addEventListener('click', function() {
   }
 });
 
-document.getElementById('reset-btn').addEventListener('click', () => resetToDefaults(true));
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (!canEdit) { alert('Admin token required to reset defaults.'); return; }
+  if (!window.confirm('Reset all dropdowns to defaults? This will overwrite your saved config on GitHub.')) return;
+  config = JSON.parse(JSON.stringify(DEFAULTS));
+  Object.keys(DEFAULTS).forEach(k => { state[k] = getDefaultSelected(k, config[k]); });
+  saveSelections();
+  scheduleSave();
+  renderAll();
+});
 
 const today = new Date();
 const pad = n => String(n).padStart(2,'0');
 document.getElementById('date').value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
-loadState();
-renderAll();
+// Boot
+(async () => {
+  setSyncStatus('saving', 'loading config…');
+  await loadConfigFromGitHub();
+  loadSelections();
+  renderAll();
+  setSyncStatus('', '');
+})();
 </script>
 </body>
 </html>
