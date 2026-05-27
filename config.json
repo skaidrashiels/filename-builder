@@ -410,6 +410,10 @@
       {
         "value": "other",
         "label": "other (type below)"
+      },
+      {
+        "value": "tabloid",
+        "label": "tabloid"
       }
     ]
   },
