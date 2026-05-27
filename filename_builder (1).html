@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filename Builder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 12px;
+    background: #f5f4f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 50px;
+  }
+
+  .page {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border: 0.5px solid #d8d6d0;
+    border-radius: 12px;
+    padding: 50px;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .subhead {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 28px 0 16px;
+    letter-spacing: -0.3px;
+  }
+
+  hr {
+    border: none;
+    border-top: 0.5px solid #e0ded8;
+    margin: 28px 0;
+  }
+
+  .field-group { margin-bottom: 18px; }
+
+  .field-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* Custom select */
+  .custom-select-wrap { position: relative; }
+
+  .custom-select-trigger {
+    width: 100%;
+    padding: 8px 32px 8px 10px;
+    font-size: 12px;
+    border: 0.5px solid #c8c6c0;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .custom-select-trigger:hover { border-color: #999; }
+  .custom-select-trigger .arrow { font-size: 10px; color: #999; flex-shrink: 0; }
+
+  .custom-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0; right: 0;
+    background: #fff;
+    border: 0.5px solid #c8c6c0;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .custom-dropdown.open { display: block; }
+
+  .dropdown-group-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 10px 4px;
+  }
+
+  .dropdown-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .dropdown-option:hover { background: #f5f4f0; }
+  .dropdown-option.selected { font-weight: 500; }
+  .dropdown-option .opt-label { flex: 1; }
+
+  .opt-actions { display: none; gap: 4px; }
+  .dropdown-option:hover .opt-actions { display: flex; }
+
+  .opt-btn {
+    padding: 2px 6px;
+    font-size: 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #555;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .opt-btn:hover { background: #eee; }
+  .opt-btn.danger:hover { background: #fee; color: #c00; border-color: #f99; }
+
+  .dropdown-add {
+    padding: 6px 10px;
+    border-top: 0.5px solid #e8e6e0;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .dropdown-add input {
+    flex: 1;
+    padding: 5px 8px;
+    font-size: 11px;
+    border: 0.5px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    background: #faf9f7;
+  }
+  .dropdown-add input:focus { outline: none; border-color: #888; }
+  .add-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+    border: 0.5px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .add-btn:hover { background: #f0efe9; }
+
+  /* Plain text input for strain/other */
+  .plain-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 12px;
+    border: 0.5px solid #c8c6c0;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    font-family: inherit;
+  }
+  .plain-input:focus { outline: none; border-color: #888; }
+  .plain-input.hidden { display: none; margin-top: 6px; }
+
+  /* Output */
+  .output-box {
+    background: #f5f4f0;
+    border: 0.5px solid #d8d6d0;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 28px;
+  }
+  .output-label {
+    font-size: 10px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .filename {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    color: #1a1a1a;
+    word-break: break-all;
+    line-height: 1.6;
+    min-height: 20px;
+  }
+  .copy-btn {
+    margin-top: 12px;
+    padding: 7px 16px;
+    font-size: 12px;
+    border: 0.5px solid #c8c6c0;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: #f0efe9; }
+
+  .reset-link {
+    font-size: 11px;
+    color: #aaa;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 28px;
+    display: inline-block;
+  }
+  .reset-link:hover { color: #c00; }
+
+  /* Inline rename input */
+  .rename-input {
+    flex: 1;
+    padding: 2px 6px;
+    font-size: 12px;
+    border: 0.5px solid #888;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+  .rename-input:focus { outline: none; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Filename Builder</h1>
+
+  <div class="subhead">Brand &amp; Product</div>
+
+  <div class="field-group">
+    <label class="field-label">Brand</label>
+    <div class="custom-select-wrap" id="wrap-brand"></div>
+    <input type="text" class="plain-input hidden" id="brand-other" placeholder="retired brand name" />
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Line Designation</label>
+    <div class="custom-select-wrap" id="wrap-line"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Strain / Flavor</label>
+    <input type="text" class="plain-input" id="strain" placeholder="fruitloops, orig, etc." />
+  </div>
+
+  <hr />
+  <div class="subhead">File Details</div>
+
+  <div class="field-group">
+    <label class="field-label">Category</label>
+    <div class="custom-select-wrap" id="wrap-category"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Component</label>
+    <div class="custom-select-wrap" id="wrap-component"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Size</label>
+    <div class="custom-select-wrap" id="wrap-size"></div>
+    <input type="text" class="plain-input hidden" id="size-other" placeholder="custom size" />
+  </div>
+
+  <hr />
+  <div class="subhead">Version &amp; Status</div>
+
+  <div class="field-group">
+    <label class="field-label">Status</label>
+    <div class="custom-select-wrap" id="wrap-status"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Version</label>
+    <div class="custom-select-wrap" id="wrap-version"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Date</label>
+    <input type="date" class="plain-input" id="date" />
+  </div>
+
+  <div class="output-box">
+    <div class="output-label">Filename</div>
+    <div class="filename" id="output">—</div>
+    <button class="copy-btn" id="copy-btn">&#x2398; Copy</button>
+  </div>
+
+  <div class="reset-link" id="reset-btn">Reset all customizations to defaults</div>
+</div>
+
+<script>
+const DEFAULTS = {
+  brand: {
+    flat: true,
+    options: [
+      { value: '', label: '— select —' },
+      { value: 'walden', label: 'walden' },
+      { value: 'waldentrailblazers', label: 'waldentrailblazers' },
+      { value: 'waldenreserve', label: 'waldenreserve' },
+      { value: 'waldenreservecarbonoffset', label: 'waldenreservecarbonoffset' },
+      { value: 'waldensnowcaps', label: 'waldensnowcaps' },
+      { value: 'bonbon', label: 'bonbon' },
+      { value: 'batonsdebon bon', label: 'batonsdebon bon' },
+      { value: 'plume', label: 'plume' },
+      { value: 'plumeblunts', label: 'plumeblunts' },
+      { value: 'cascadecrest', label: 'cascadecrest' },
+      { value: 'cascadecrestvapes', label: 'cascadecrestvapes' },
+      { value: 'cascadecrestcrush', label: 'cascadecrestcrush' },
+      { value: 'cascadecrestmellows', label: 'cascadecrestmellows' },
+      { value: 'puffy', label: 'puffy' },
+      { value: 'puffysodashoppe', label: 'puffysodashoppe' },
+      { value: 'shotskis', label: 'shotskis' },
+      { value: 'thedrink', label: 'thedrink' },
+      { value: 'retired', label: 'retired brand (type below)' }
+    ]
+  },
+  line: {
+    flat: true,
+    options: [
+      { value: 'na', label: 'na (none)' },
+      { value: 'wild', label: 'wild' },
+      { value: 'bold', label: 'bold' },
+      { value: 'free', label: 'free' },
+      { value: 'calm', label: 'calm' },
+      { value: 'cozy', label: 'cozy' },
+      { value: 'well', label: 'well' },
+      { value: 'justbe', label: 'justbe' },
+      { value: 'sativa', label: 'sativa' },
+      { value: 'indica', label: 'indica' },
+      { value: 'hybrid', label: 'hybrid' },
+      { value: 'hashrosin', label: 'hashrosin' },
+      { value: 'liveresin', label: 'liveresin' },
+      { value: 'curedresin', label: 'curedresin' }
+    ]
+  },
+  category: {
+    flat: true,
+    options: [
+      { value: '', label: '— select —' },
+      { value: 'packaging', label: 'packaging' },
+      { value: 'marketing', label: 'marketing' },
+      { value: 'photo', label: 'photo' },
+      { value: 'dev', label: 'dev' },
+      { value: 'admin', label: 'admin' }
+    ]
+  },
+  component: {
+    flat: false,
+    groups: [
+      { label: 'packaging', options: [
+        { value: 'frontlabel', label: 'frontlabel' },
+        { value: 'backlabel', label: 'backlabel' },
+        { value: 'barcode', label: 'barcode' },
+        { value: 'dieline', label: 'dieline' },
+        { value: 'boxpanel', label: 'boxpanel' },
+        { value: 'boxfull', label: 'boxfull' },
+        { value: 'hangtag', label: 'hangtag' },
+        { value: 'headercard', label: 'headercard' },
+        { value: 'stickersheet', label: 'stickersheet' },
+        { value: 'insert', label: 'insert' },
+        { value: 'sleeve', label: 'sleeve' },
+        { value: 'pouch', label: 'pouch' }
+      ]},
+      { label: 'marketing', options: [
+        { value: 'social', label: 'social' },
+        { value: 'printad', label: 'printad' },
+        { value: 'sellsheet', label: 'sellsheet' },
+        { value: 'banner', label: 'banner' },
+        { value: 'signage', label: 'signage' },
+        { value: 'email', label: 'email' },
+        { value: 'menu', label: 'menu' }
+      ]},
+      { label: 'photo', options: [
+        { value: 'product', label: 'product' },
+        { value: 'lifestyle', label: 'lifestyle' },
+        { value: 'detail', label: 'detail' },
+        { value: 'raw', label: 'raw' },
+        { value: 'edit', label: 'edit' }
+      ]},
+      { label: 'dev / admin', options: [
+        { value: 'spec', label: 'spec' },
+        { value: 'techpack', label: 'techpack' },
+        { value: 'cert', label: 'cert' },
+        { value: 'compliance', label: 'compliance' },
+        { value: 'swatch', label: 'swatch' }
+      ]}
+    ]
+  },
+  size: {
+    flat: true,
+    options: [
+      { value: 'na', label: 'na (none)' },
+      { value: '0p5g', label: '0.5g' },
+      { value: '1g', label: '1g' },
+      { value: '3p5g', label: '3.5g' },
+      { value: '7g', label: '7g' },
+      { value: '14g', label: '14g' },
+      { value: '28g', label: '28g' },
+      { value: '5pk', label: '5pk' },
+      { value: '6pk', label: '6pk' },
+      { value: '10pk', label: '10pk' },
+      { value: '14pk', label: '14pk' },
+      { value: 'lgroll', label: 'lgroll' },
+      { value: 'smroll', label: 'smroll' },
+      { value: 'thermroll', label: 'thermroll' },
+      { value: 'large', label: 'large' },
+      { value: 'small', label: 'small' },
+      { value: 'other', label: 'other (type below)' }
+    ]
+  },
+  status: {
+    flat: true,
+    options: [
+      { value: 'wip', label: 'wip' },
+      { value: 'review', label: 'review' },
+      { value: 'final', label: 'final' },
+      { value: 'printready', label: 'printready' }
+    ]
+  },
+  version: {
+    flat: true,
+    options: [
+      { value: 'v01', label: 'v01' },
+      { value: 'v02', label: 'v02' },
+      { value: 'v03', label: 'v03' },
+      { value: 'v04', label: 'v04' },
+      { value: 'v05', label: 'v05' },
+      { value: 'v06', label: 'v06' },
+      { value: 'v07', label: 'v07' },
+      { value: 'v08', label: 'v08' },
+      { value: 'v09', label: 'v09' },
+      { value: 'v10', label: 'v10' }
+    ]
+  }
+};
+
+const LS_KEY = 'filename_builder_data';
+let state = {};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) state = JSON.parse(saved);
+    else resetToDefaults(false);
+  } catch(e) { resetToDefaults(false); }
+}
+
+function saveState() {
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
+}
+
+function resetToDefaults(confirm_first) {
+  if (confirm_first && !window.confirm('Reset all dropdowns to defaults? This cannot be undone.')) return;
+  state = {};
+  Object.keys(DEFAULTS).forEach(k => {
+    state[k] = { selected: getDefaultSelected(k), data: JSON.parse(JSON.stringify(DEFAULTS[k])) };
+  });
+  saveState();
+  renderAll();
+}
+
+function getDefaultSelected(k) {
+  const d = DEFAULTS[k];
+  if (d.flat) return d.options[0].value;
+  return '';
+}
+
+function getAllOptions(fieldKey) {
+  const d = state[fieldKey].data;
+  if (d.flat) return d.options;
+  return d.groups.flatMap(g => g.options);
+}
+
+function clean(str) {
+  return str.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
+}
+
+function buildFilename() {
+  const brand = state.brand.selected === 'retired'
+    ? clean(document.getElementById('brand-other').value)
+    : clean(state.brand.selected);
+  const line = clean(state.line.selected) || 'na';
+  const strainRaw = document.getElementById('strain').value.trim();
+  const strain = strainRaw ? clean(strainRaw) : 'orig';
+  const category = clean(state.category.selected);
+  const component = clean(state.component.selected);
+  const size = state.size.selected === 'other'
+    ? clean(document.getElementById('size-other').value)
+    : state.size.selected;
+  const status = clean(state.status.selected);
+  const version = state.version.selected;
+  const dateRaw = document.getElementById('date').value;
+  const date = dateRaw ? dateRaw.replace(/-/g,'') : '';
+  const parts = [brand, line, strain, component || category, size, status, version, date];
+  document.getElementById('output').textContent = parts.filter(Boolean).join('_') || '—';
+}
+
+function renderSelect(fieldKey) {
+  const wrap = document.getElementById('wrap-' + fieldKey);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+
+  const d = state[fieldKey].data;
+  const selected = state[fieldKey].selected;
+
+  const selectedLabel = (() => {
+    const all = getAllOptions(fieldKey);
+    const found = all.find(o => o.value === selected);
+    return found ? found.label : (selected || '— select —');
+  })();
+
+  const trigger = document.createElement('button');
+  trigger.className = 'custom-select-trigger';
+  trigger.innerHTML = `<span class="opt-label">${selectedLabel}</span><span class="arrow">&#9660;</span>`;
+  wrap.appendChild(trigger);
+
+  const dropdown = document.createElement('div');
+  dropdown.className = 'custom-dropdown';
+
+  const renderOptions = () => {
+    dropdown.innerHTML = '';
+
+    const renderOpt = (opt, groupLabel) => {
+      const row = document.createElement('div');
+      row.className = 'dropdown-option' + (opt.value === selected ? ' selected' : '');
+
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'opt-label';
+      labelSpan.textContent = opt.label;
+
+      const actions = document.createElement('div');
+      actions.className = 'opt-actions';
+
+      const renameBtn = document.createElement('button');
+      renameBtn.className = 'opt-btn';
+      renameBtn.textContent = 'rename';
+      renameBtn.onclick = (e) => {
+        e.stopPropagation();
+        labelSpan.style.display = 'none';
+        actions.style.display = 'none';
+        const inp = document.createElement('input');
+        inp.className = 'rename-input';
+        inp.value = opt.label;
+        inp.onclick = e => e.stopPropagation();
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'opt-btn';
+        saveBtn.textContent = 'save';
+        saveBtn.onclick = (e2) => {
+          e2.stopPropagation();
+          const newLabel = inp.value.trim();
+          if (!newLabel) return;
+          opt.label = newLabel;
+          if (opt.value === selected) trigger.querySelector('.opt-label').textContent = newLabel;
+          saveState();
+          renderOptions();
+        };
+        inp.onkeydown = (e2) => { if (e2.key === 'Enter') saveBtn.click(); };
+        row.appendChild(inp);
+        row.appendChild(saveBtn);
+        inp.focus(); inp.select();
+      };
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'opt-btn danger';
+      deleteBtn.textContent = 'delete';
+      deleteBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (!window.confirm(`Delete "${opt.label}"?`)) return;
+        if (d.flat) {
+          d.options = d.options.filter(o => o !== opt);
+        } else {
+          const grp = d.groups.find(g => g.label === groupLabel);
+          if (grp) grp.options = grp.options.filter(o => o !== opt);
+        }
+        if (state[fieldKey].selected === opt.value) {
+          state[fieldKey].selected = getAllOptions(fieldKey)[0]?.value || '';
+        }
+        saveState();
+        renderSelect(fieldKey);
+        buildFilename();
+      };
+
+      actions.appendChild(renameBtn);
+      actions.appendChild(deleteBtn);
+
+      row.appendChild(labelSpan);
+      row.appendChild(actions);
+
+      row.addEventListener('click', () => {
+        state[fieldKey].selected = opt.value;
+        trigger.querySelector('.opt-label').textContent = opt.label;
+        saveState();
+        dropdown.classList.remove('open');
+
+        if (fieldKey === 'brand') {
+          document.getElementById('brand-other').classList.toggle('hidden', opt.value !== 'retired');
+        }
+        if (fieldKey === 'size') {
+          document.getElementById('size-other').classList.toggle('hidden', opt.value !== 'other');
+        }
+        buildFilename();
+      });
+
+      dropdown.appendChild(row);
+    };
+
+    if (d.flat) {
+      d.options.forEach(opt => renderOpt(opt, null));
+    } else {
+      d.groups.forEach(grp => {
+        const lbl = document.createElement('div');
+        lbl.className = 'dropdown-group-label';
+        lbl.textContent = grp.label;
+        dropdown.appendChild(lbl);
+        grp.options.forEach(opt => renderOpt(opt, grp.label));
+      });
+    }
+
+    const addRow = document.createElement('div');
+    addRow.className = 'dropdown-add';
+    const addInput = document.createElement('input');
+    addInput.placeholder = 'add new option…';
+    addInput.onclick = e => e.stopPropagation();
+
+    if (!d.flat) {
+      const groupSelect = document.createElement('select');
+      groupSelect.style.cssText = 'padding:4px 6px;font-size:11px;border:0.5px solid #ccc;border-radius:6px;font-family:inherit;background:#faf9f7;';
+      groupSelect.onclick = e => e.stopPropagation();
+      d.groups.forEach(g => {
+        const o = document.createElement('option');
+        o.value = g.label; o.textContent = g.label;
+        groupSelect.appendChild(o);
+      });
+      addRow.appendChild(groupSelect);
+      addRow.appendChild(addInput);
+      const addBtn = document.createElement('button');
+      addBtn.className = 'add-btn';
+      addBtn.textContent = '+ add';
+      addBtn.onclick = (e) => {
+        e.stopPropagation();
+        const val = clean(addInput.value.trim());
+        const lbl = addInput.value.trim();
+        if (!val) return;
+        const grp = d.groups.find(g => g.label === groupSelect.value);
+        if (grp) grp.options.push({ value: val, label: lbl });
+        addInput.value = '';
+        saveState();
+        renderOptions();
+      };
+      addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
+      addRow.appendChild(addBtn);
+    } else {
+      addRow.appendChild(addInput);
+      const addBtn = document.createElement('button');
+      addBtn.className = 'add-btn';
+      addBtn.textContent = '+ add';
+      addBtn.onclick = (e) => {
+        e.stopPropagation();
+        const val = clean(addInput.value.trim());
+        const lbl = addInput.value.trim();
+        if (!val) return;
+        d.options.push({ value: val, label: lbl });
+        addInput.value = '';
+        saveState();
+        renderOptions();
+      };
+      addInput.onkeydown = (e) => { if (e.key === 'Enter') addBtn.click(); };
+      addRow.appendChild(addBtn);
+    }
+
+    dropdown.appendChild(addRow);
+  };
+
+  renderOptions();
+  wrap.appendChild(dropdown);
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasOpen = dropdown.classList.contains('open');
+    document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));
+    if (!wasOpen) dropdown.classList.add('open');
+  });
+}
+
+function renderAll() {
+  Object.keys(DEFAULTS).forEach(k => renderSelect(k));
+  document.getElementById('brand-other').classList.add('hidden');
+  document.getElementById('size-other').classList.add('hidden');
+  buildFilename();
+}
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));
+});
+
+document.getElementById('strain').addEventListener('input', buildFilename);
+document.getElementById('brand-other').addEventListener('input', buildFilename);
+document.getElementById('size-other').addEventListener('input', buildFilename);
+document.getElementById('date').addEventListener('change', buildFilename);
+
+document.getElementById('copy-btn').addEventListener('click', function() {
+  const text = document.getElementById('output').textContent;
+  if (text && text !== '—') {
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = 'Copied!';
+      setTimeout(() => { this.textContent = '⌘ Copy'; }, 1500);
+    });
+  }
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => resetToDefaults(true));
+
+const today = new Date();
+const pad = n => String(n).padStart(2,'0');
+document.getElementById('date').value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+
+loadState();
+renderAll();
+</script>
+</body>
+</html>
