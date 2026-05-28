@@ -185,10 +185,6 @@
             "label": "frontlabel"
           },
           {
-            "value": "backlabel",
-            "label": "backlabel"
-          },
-          {
             "value": "barcode",
             "label": "barcode"
           },
