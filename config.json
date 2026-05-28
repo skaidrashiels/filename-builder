@@ -282,6 +282,10 @@
           {
             "value": "illustration",
             "label": "illustration"
+          },
+          {
+            "value": "logo",
+            "label": "logo"
           }
         ]
       },
